@@ -10,6 +10,13 @@ public class PlayerController : MonoBehaviour
     private const float moveSpd = 7f;
     private Vector3 worldPos;
     private Quaternion targetRot;
+    private CompanionController selectedCompanion = null;
+    private bool toggle1 = false;
+    private bool toggle2 = false;
+    private bool toggle3 = false;
+    private bool toggle4 = false;
+
+    public EnemyController targetObj;
 
     public CompanionController Companion1;
     public CompanionController Companion2;
@@ -19,6 +26,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+
     }
 
     private void Update()
@@ -45,45 +57,72 @@ public class PlayerController : MonoBehaviour
 
         moveDir = new Vector3(moveX, moveY).normalized;
 
-        if (moveDir != Vector3.zero)
-        {
-            targetRot = Quaternion.LookRotation(Vector3.forward, moveDir);
-            targetRot = Quaternion.RotateTowards(transform.rotation, targetRot, 360 * Time.fixedDeltaTime);
-        }
+        
 
 
+        // Convert mouse position to a location within the game worldspace
         Vector3 mousePos = Input.mousePosition;
-        // mousePos.z = Camera.main.nearClipPlane;
+        mousePos.z = Camera.main.nearClipPlane;
         worldPos = Camera.main.ScreenToWorldPoint(mousePos);
         worldPos.z = 0f;
 
-        if (Input.GetKey(KeyCode.Alpha1) && Input.GetMouseButton(1))
+        // Tell game script which Companion you want to control
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Companion1.atRest = false;
-            Companion1.targetPos = worldPos;
+            selectedCompanion = Companion1;
+            toggle1 = !toggle1;
         }
-        if (Input.GetKey(KeyCode.Alpha2) && Input.GetMouseButton(1))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Companion2.atRest = false;
-            Companion2.targetPos = worldPos;
+            selectedCompanion = Companion2;
+            toggle2 = !toggle2;
         }
-        if (Input.GetKey(KeyCode.Alpha3) && Input.GetMouseButton(1))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Companion3.atRest = false;
-            Companion3.targetPos = worldPos;
+            selectedCompanion = Companion3;
+            toggle3 = !toggle3;
         }
-        if (Input.GetKey(KeyCode.Alpha4) && Input.GetMouseButton(1))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            Companion4.atRest = false;
-            Companion4.targetPos = worldPos;
+            selectedCompanion = Companion4;
+            toggle4 = !toggle4;
+        }
+        if (toggle1 == false && toggle2 == false && toggle3 == false && toggle4 == false) // reset variable if no Companion button is toggled on
+        {
+            selectedCompanion = null;
         }
         
+        
+        // Tell Companion where to look
+        if (selectedCompanion != null && Input.GetMouseButton(0))
+        {
+            selectedCompanion.state = 1;
+            selectedCompanion.targetPos = worldPos;
+            if (targetObj != null) // if targetObj exists, then...
+            {
+                Debug.Log(selectedCompanion.name + " wants to attack " + targetObj.name);
+            }
+            
+        }
+        // Tell Companion where to move
+        if (selectedCompanion != null && Input.GetMouseButton(1))
+        {
+            selectedCompanion.state = 2;
+            selectedCompanion.targetPos = worldPos;
+        }
+        targetObj = null; // reset targetObj after each frame update
     }
 
     private void FixedUpdate()
     {
         Rigidbody2D.velocity = moveDir * moveSpd;
-        Rigidbody2D.MoveRotation(targetRot);
-    }
 
+        // If GameObject is moving, affect rotation and rotate towards movement direction
+        if (moveDir != Vector3.zero)
+        {
+            targetRot = Quaternion.LookRotation(Vector3.forward, moveDir);
+            targetRot = Quaternion.RotateTowards(transform.rotation, targetRot, 720 * Time.fixedDeltaTime);
+            Rigidbody2D.MoveRotation(targetRot);
+        }
+    }
 }
