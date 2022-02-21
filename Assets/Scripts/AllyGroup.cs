@@ -19,7 +19,7 @@ public class AllyGroup : MonoBehaviour
     public static AllyGroup FindClosestAlly(Vector3 pos)
     {
         AllyGroup result = null;
-        float dist = 10f;
+        float dist = 20f;
         var e = AllyGroup.Pool.GetEnumerator();
         while(e.MoveNext())
         {

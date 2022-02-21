@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    private Vector3 mousePos;
     private Rigidbody2D Rigidbody2D;
     private Vector3 moveDir;
     private const float moveSpd = 7f;
@@ -61,8 +62,8 @@ public class PlayerController : MonoBehaviour
 
 
         // Convert mouse position to a location within the game worldspace
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = Camera.main.nearClipPlane;
+        mousePos = Input.mousePosition;
+        mousePos.z += Camera.main.nearClipPlane;
         worldPos = Camera.main.ScreenToWorldPoint(mousePos);
         worldPos.z = 0f;
 

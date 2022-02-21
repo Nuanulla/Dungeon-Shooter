@@ -12,9 +12,11 @@ public class EnemyController : MonoBehaviour
     public Vector3 targetPos;
     public Quaternion targetRot;
     private Vector3 currentPos;
+    private const float moveSpd = 3f;
 
-    public GameObject healthBar;
-    public Slider healthBarSlider;
+    public Canvas Canvas;
+    private GameObject enemyHealth;
+    private Slider healthBarSlider;
     public int health = 100; //remove '100' value and set from each enemy type's individual scripts
     public int currentHealth = 100;
 
@@ -23,20 +25,22 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
-        healthBarSlider = healthBar.GetComponent<Slider>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        healthBar.SetActive(true);
+        enemyHealth = Instantiate(Canvas.transform.GetChild(0).gameObject);
+        enemyHealth.transform.SetParent(Canvas.transform, false);
+        healthBarSlider = enemyHealth.GetComponent<Slider>();
+        enemyHealth.SetActive(true);
         healthBarSlider.minValue = 0;
         healthBarSlider.maxValue = health;
     }
 
     void Update()
     {
-        // Below script calculate current position and vector difference of a current position and target position
+        // Below script calculates current position and vector difference of a current position and target position
         currentPos = transform.position;
         vectorDiff = targetPos - currentPos;
 
@@ -46,12 +50,16 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        healthBarSlider.transform.position = new Vector3(currentPos.x, currentPos.y - 1f, currentPos.z);
+        enemyHealth.transform.position = new Vector3(currentPos.x, currentPos.y - 1f, currentPos.z);
         var nearestAlly = AllyGroup.FindClosestAlly(transform.position);
         if (nearestAlly != null)
         {
             targetPos = nearestAlly.transform.position;
             LookAtTarget();
+            if (Vector3.Distance(currentPos, targetPos) > 1.5f)
+            {
+                Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
+            }
         }
     }
 
