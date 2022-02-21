@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGroup : MonoBehaviour
+public class FriendlyGroup : MonoBehaviour
 {
     public static readonly HashSet<GameObject> Pool = new HashSet<GameObject>();
  
@@ -16,11 +16,11 @@ public class EnemyGroup : MonoBehaviour
         Pool.Remove(gameObject);
     }
 
-    public static GameObject FindClosestEnemy(Vector3 pos)
+    public static GameObject FindClosestFriendly(Vector3 pos)
     {
         GameObject result = null;
-        float dist = 15f;
-        var e = Pool.GetEnumerator();
+        float dist = 20f;
+        var e = FriendlyGroup.Pool.GetEnumerator();
         while(e.MoveNext())
         {
             float d = (e.Current.transform.position - pos).sqrMagnitude;
@@ -31,5 +31,17 @@ public class EnemyGroup : MonoBehaviour
             }
         }
         return result;
+    }
+
+    public bool VerifyFriendly(GameObject entity)
+    {
+        if (Pool.Contains(entity))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

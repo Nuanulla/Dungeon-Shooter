@@ -24,11 +24,12 @@ public class CompanionController : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
     {
+        // Below script calculates current position and vector difference of a current position and target position
         currentPos = transform.position;
         vectorDiff = targetPos - currentPos;
         currentRot = transform.rotation;
@@ -57,7 +58,6 @@ public class CompanionController : MonoBehaviour
             LookAtTarget();
         }
     }
-
 
     void LookAtTarget()
     {

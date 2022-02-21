@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -14,12 +13,8 @@ public class EnemyController : MonoBehaviour
     private Vector3 currentPos;
     private const float moveSpd = 3f;
 
-    public Canvas Canvas;
-    private GameObject enemyHealth;
-    private Slider healthBarSlider;
-    public int health = 100; //remove '100' value and set from each enemy type's individual scripts
-    public int currentHealth = 100;
-
+    private float attackRate = 1.0f;
+    private float attackDelay;
     
 
     private void Awake()
@@ -30,12 +25,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyHealth = Instantiate(Canvas.transform.GetChild(0).gameObject);
-        enemyHealth.transform.SetParent(Canvas.transform, false);
-        healthBarSlider = enemyHealth.GetComponent<Slider>();
-        enemyHealth.SetActive(true);
-        healthBarSlider.minValue = 0;
-        healthBarSlider.maxValue = health;
+
     }
 
     void Update()
@@ -43,29 +33,25 @@ public class EnemyController : MonoBehaviour
         // Below script calculates current position and vector difference of a current position and target position
         currentPos = transform.position;
         vectorDiff = targetPos - currentPos;
-
-        // Update Health Bar with value of currentHealth at each frame
-        healthBarSlider.value = currentHealth;
     }
 
     private void FixedUpdate()
     {
-        enemyHealth.transform.position = new Vector3(currentPos.x, currentPos.y - 1f, currentPos.z);
-        var nearestAlly = AllyGroup.FindClosestAlly(transform.position);
-        if (nearestAlly != null)
+        var nearestFriendly = FriendlyGroup.FindClosestFriendly(transform.position);
+        if (nearestFriendly != null)
         {
-            targetPos = nearestAlly.transform.position;
+            targetPos = nearestFriendly.transform.position;
             LookAtTarget();
             if (Vector3.Distance(currentPos, targetPos) > 1.5f)
             {
                 Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
             }
+            if ((Vector3.Distance(currentPos, targetPos) <= 1.5f) && Time.fixedTime > attackDelay)
+            {
+                attackDelay = Time.fixedTime + attackRate;
+                nearestFriendly.SendMessage("TakeDamage", 10);
+            }
         }
-    }
-
-    void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
     }
 
     void OnMouseDown()
