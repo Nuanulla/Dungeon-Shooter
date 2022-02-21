@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-
+        
     }
 
     private void Update()
@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
             }
             
         }
+
         // Tell Companion where to move
         if (selectedCompanion != null && Input.GetMouseButton(1))
         {
