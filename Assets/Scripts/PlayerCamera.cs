@@ -9,9 +9,11 @@ public class PlayerCamera : MonoBehaviour {
 
     void FixedUpdate ()
     {
-        Vector3 targetPos = target.TransformPoint(new Vector3(0, 0, -10));
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
-
+        if (target != null)
+        {
+            Vector3 targetPos = target.TransformPoint(new Vector3(0, 0, -10));
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
+        }
     }
 
 }
