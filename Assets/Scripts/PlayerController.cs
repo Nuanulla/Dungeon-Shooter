@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
 
-    private Vector3 mousePos;
+
     private Rigidbody2D Rigidbody2D;
     private Vector3 moveDir;
     private const float moveSpd = 7f;
-    private Vector3 worldPos;
+    private Vector2 mousePos;
+    private Vector2 worldPos;
     private Quaternion targetRot;
     private CompanionController selectedCompanion = null;
     private bool toggle1 = false;
@@ -36,54 +38,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        float moveX = 0f;
-        float moveY= 0f;
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            moveY = +1f;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveX = -1f;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            moveY = -1f;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveX = +1f;
-        }
-
-        moveDir = new Vector3(moveX, moveY).normalized;
-
-        
-
-
-        // Convert mouse position to a location within the game worldspace
-        mousePos = Input.mousePosition;
-        mousePos.z += Camera.main.nearClipPlane;
+        mousePos = Mouse.current.position.ReadValue();
         worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-        worldPos.z = 0f;
 
         // Tell game script which Companion you want to control
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             selectedCompanion = Companion1;
             toggle1 = !toggle1;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             selectedCompanion = Companion2;
             toggle2 = !toggle2;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Keyboard.current.digit3Key.wasPressedThisFrame)
         {
             selectedCompanion = Companion3;
             toggle3 = !toggle3;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (Keyboard.current.digit4Key.wasPressedThisFrame)
         {
             selectedCompanion = Companion4;
             toggle4 = !toggle4;
@@ -95,7 +70,7 @@ public class PlayerController : MonoBehaviour
         
         
         // Tell Companion where to look
-        if (selectedCompanion != null && Input.GetMouseButton(0))
+        if (selectedCompanion != null && Mouse.current.leftButton.isPressed)
         {
             selectedCompanion.state = 1;
             selectedCompanion.targetPos = worldPos;
@@ -107,7 +82,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Tell Companion where to move
-        if (selectedCompanion != null && Input.GetMouseButton(1))
+        if (selectedCompanion != null && Mouse.current.rightButton.isPressed)
         {
             selectedCompanion.state = 2;
             selectedCompanion.targetPos = worldPos;
@@ -117,7 +92,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         Rigidbody2D.velocity = moveDir * moveSpd;
+
 
         // If GameObject is moving, affect rotation and rotate towards movement direction
         if (moveDir != Vector3.zero)
@@ -126,5 +103,12 @@ public class PlayerController : MonoBehaviour
             targetRot = Quaternion.RotateTowards(transform.rotation, targetRot, 720 * Time.fixedDeltaTime);
             Rigidbody2D.MoveRotation(targetRot);
         }
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        float inputX = context.ReadValue<Vector2>().x;
+        float inputY = context.ReadValue<Vector2>().y;
+        moveDir = new Vector2(inputX, inputY);
     }
 }

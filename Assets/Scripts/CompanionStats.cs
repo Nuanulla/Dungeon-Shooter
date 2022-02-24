@@ -30,7 +30,7 @@ public class CompanionStats : MonoBehaviour
     private void CloneDisplayUI()
     {
         float OffsetX = 100f * (companionNumber - 1) + 190f;
-        float OffsetY = -70f;
+        float OffsetY = -134f;
         Vector2 statDisplayOffset = new Vector2(OffsetX, OffsetY);
         companionStats = Instantiate(Canvas.transform.GetChild(1).gameObject, statDisplayOffset, Quaternion.identity);
         companionStats.transform.SetParent(Canvas.transform, false);
