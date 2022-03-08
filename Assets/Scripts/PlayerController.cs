@@ -19,8 +19,6 @@ public class PlayerController : MonoBehaviour
     private bool toggle3 = false;
     private bool toggle4 = false;
 
-    public EnemyController targetObj;
-
     public CompanionController Companion1;
     public CompanionController Companion2;
     public CompanionController Companion3;
@@ -74,11 +72,6 @@ public class PlayerController : MonoBehaviour
         {
             selectedCompanion.state = 1;
             selectedCompanion.targetPos = worldPos;
-            if (targetObj != null) // if targetObj exists, then...
-            {
-                Debug.Log(selectedCompanion.name + " wants to attack " + targetObj.name);
-            }
-            
         }
 
         // Tell Companion where to move
@@ -87,7 +80,6 @@ public class PlayerController : MonoBehaviour
             selectedCompanion.state = 2;
             selectedCompanion.targetPos = worldPos;
         }
-        targetObj = null; // reset targetObj after each frame update
     }
 
     private void FixedUpdate()

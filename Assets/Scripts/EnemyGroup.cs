@@ -19,7 +19,7 @@ public class EnemyGroup : MonoBehaviour
     public static GameObject FindClosestEnemy(Vector3 pos)
     {
         GameObject result = null;
-        float dist = 15f;
+        float dist = 50f;
         var e = Pool.GetEnumerator();
         while(e.MoveNext())
         {

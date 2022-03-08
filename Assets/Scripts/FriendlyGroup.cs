@@ -19,7 +19,7 @@ public class FriendlyGroup : MonoBehaviour
     public static GameObject FindClosestFriendly(Vector3 pos)
     {
         GameObject result = null;
-        float dist = 20f;
+        float dist = 50f;
         var e = FriendlyGroup.Pool.GetEnumerator();
         while(e.MoveNext())
         {
