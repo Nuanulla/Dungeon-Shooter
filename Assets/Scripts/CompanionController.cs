@@ -6,7 +6,7 @@ public class CompanionController : MonoBehaviour
 {
 
     private Rigidbody2D Rigidbody2D;
-    private const float moveSpd = 3f;
+    private const float moveSpd = 7f;
     public Vector3 targetPos;
     private Vector3 currentPos;
     public int state; // 0 = at rest; 1 = change rotation; 2 = change position

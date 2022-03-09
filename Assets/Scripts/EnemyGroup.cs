@@ -8,6 +8,11 @@ public class EnemyGroup : MonoBehaviour
  
     void Awake()
     {
+        Invoke("Add", 0.1f);
+    }
+
+    void Add()
+    {
         Pool.Add(gameObject);
     }
  
@@ -19,12 +24,12 @@ public class EnemyGroup : MonoBehaviour
     public static GameObject FindClosestEnemy(Vector3 pos)
     {
         GameObject result = null;
-        float dist = 50f;
-        var e = Pool.GetEnumerator();
+        float dist = 150f;
+        var e = EnemyGroup.Pool.GetEnumerator();
         while(e.MoveNext())
         {
             float d = (e.Current.transform.position - pos).sqrMagnitude;
-            if(d < dist)
+            if(d < dist && d != 0f)
             {
                 result = e.Current;
                 dist = d;

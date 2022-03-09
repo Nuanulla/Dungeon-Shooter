@@ -14,17 +14,15 @@ public class Enemy_Type1 : MonoBehaviour
 
     private float attackRate = 1.0f;
     private float attackDelay;
-    
+
+    private GameObject nearestFriendly;
 
     private void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
+        var EnemyStats = gameObject.GetComponent<EnemyStats>();
+        EnemyStats.health = 250;
+        EnemyStats.CloneStatOverlay();
     }
 
     void Update()
@@ -36,20 +34,12 @@ public class Enemy_Type1 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var nearestFriendly = FriendlyGroup.FindClosestFriendly(transform.position);
+        nearestFriendly = FriendlyGroup.FindClosestFriendly(transform.position);
         if (nearestFriendly != null)
         {
             targetPos = nearestFriendly.transform.position;
             LookAtTarget();
-            if (Vector3.Distance(currentPos, targetPos) > 1.5f)
-            {
-                Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
-            }
-            if ((Vector3.Distance(currentPos, targetPos) <= 1.5f) && Time.fixedTime > attackDelay)
-            {
-                attackDelay = Time.fixedTime + attackRate;
-                nearestFriendly.SendMessage("TakeDamage", 10);
-            }
+            PhysicalAttackBehavior();
         }
     }
 
@@ -58,5 +48,18 @@ public class Enemy_Type1 : MonoBehaviour
         targetRot = Quaternion.LookRotation(Vector3.forward, vectorDiff.normalized);
         targetRot = Quaternion.RotateTowards(transform.rotation, targetRot, 360 * Time.fixedDeltaTime);
         Rigidbody2D.MoveRotation(targetRot);
+    }
+
+    void PhysicalAttackBehavior()
+    {
+        if (Vector3.Distance(currentPos, targetPos) > 1.5f)
+        {
+            Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
+        }
+        if ((Vector3.Distance(currentPos, targetPos) <= 1.5f) && Time.fixedTime > attackDelay)
+        {
+            attackDelay = Time.fixedTime + attackRate;
+            nearestFriendly.SendMessage("TakeDamage", 10);
+        }
     }
 }

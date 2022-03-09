@@ -7,16 +7,12 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody2D Rigidbody2D;
     private const float moveSpd = 7f;
+    public int damage = 10;
 
     // Start is called before the first frame update
     private void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
-    }
-
-    void Start()
-    {
-
     }
 
     void OnEnable()
@@ -30,12 +26,12 @@ public class Projectile : MonoBehaviour
         Rigidbody2D.velocity = transform.up * moveSpd;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        Destroy(gameObject);
-        if (FriendlyGroup.Pool.Contains(col.gameObject))
+        if (FriendlyGroup.Pool.Contains(col.gameObject) || EnemyGroup.Pool.Contains(col.gameObject))
         {
-            col.gameObject.SendMessage("TakeDamage", 10);
+            col.gameObject.SendMessage("TakeDamage", damage);
         }
+        Destroy(gameObject);
     }
 }

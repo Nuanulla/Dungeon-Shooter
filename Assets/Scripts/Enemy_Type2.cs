@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemy_Type2 : MonoBehaviour
 {
-
     private Rigidbody2D Rigidbody2D;
     private Vector3 vectorDiff;
     public Vector3 targetPos;
@@ -18,16 +17,15 @@ public class Enemy_Type2 : MonoBehaviour
     public GameObject Projectile;
     private GameObject cast_projectile;
 
+    private GameObject nearestFriendly;
+
 
     private void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
+        var EnemyStats = gameObject.GetComponent<EnemyStats>();
+        EnemyStats.health = 100;
+        EnemyStats.CloneStatOverlay();
     }
 
     void Update()
@@ -39,21 +37,12 @@ public class Enemy_Type2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var nearestFriendly = FriendlyGroup.FindClosestFriendly(transform.position);
+        nearestFriendly = FriendlyGroup.FindClosestFriendly(transform.position);
         if (nearestFriendly != null)
         {
             targetPos = nearestFriendly.transform.position;
             LookAtTarget();
-            if (Vector3.Distance(currentPos, targetPos) > 5f)
-            {
-                Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
-            }
-            if ((Vector3.Distance(currentPos, targetPos) <= 10f) && Time.fixedTime > attackDelay)
-            {
-                attackDelay = Time.fixedTime + attackRate;
-                cast_projectile = Instantiate(Projectile, currentPos + (transform.up), transform.rotation);
-                cast_projectile.SetActive(true);
-            }
+            RangedAttackBehavior();
         }
     }
 
@@ -62,5 +51,21 @@ public class Enemy_Type2 : MonoBehaviour
         targetRot = Quaternion.LookRotation(Vector3.forward, vectorDiff.normalized);
         targetRot = Quaternion.RotateTowards(transform.rotation, targetRot, 360 * Time.fixedDeltaTime);
         Rigidbody2D.MoveRotation(targetRot);
+    }
+
+    void RangedAttackBehavior()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up, transform.up);
+        if (Vector3.Distance(currentPos, targetPos) > 5f)
+        {
+            Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
+        }
+        if ((FriendlyGroup.Pool.Contains(hit.collider.gameObject)) && (Vector3.Distance(currentPos, targetPos) <= 10f) && (Time.fixedTime > attackDelay))
+        {
+            attackDelay = Time.fixedTime + attackRate;
+            cast_projectile = Instantiate(Projectile, currentPos + (transform.up), transform.rotation);
+            cast_projectile.GetComponent<Projectile>().damage = 10;
+            cast_projectile.SetActive(true);
+        }
     }
 }

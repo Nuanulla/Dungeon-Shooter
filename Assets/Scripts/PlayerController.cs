@@ -10,19 +10,21 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D Rigidbody2D;
     private Vector3 moveDir;
     private const float moveSpd = 7f;
-    private Vector2 mousePos;
-    private Vector2 worldPos;
+    private Vector3 mousePos;
+    private Vector3 worldPos;
+    private Vector3 vectorDiff;
     private Quaternion targetRot;
     private CompanionController selectedCompanion = null;
     private bool toggle1 = false;
     private bool toggle2 = false;
-    private bool toggle3 = false;
-    private bool toggle4 = false;
 
     public CompanionController Companion1;
     public CompanionController Companion2;
-    public CompanionController Companion3;
-    public CompanionController Companion4;
+
+    private float attackRate = 0.4f;
+    private float attackDelay;
+    public GameObject Projectile;
+    private GameObject cast_projectile;
 
     private void Awake()
     {
@@ -39,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
         mousePos = Mouse.current.position.ReadValue();
         worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        vectorDiff = worldPos - transform.position;
+
 
         // Tell game script which Companion you want to control
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
@@ -51,17 +55,7 @@ public class PlayerController : MonoBehaviour
             selectedCompanion = Companion2;
             toggle2 = !toggle2;
         }
-        if (Keyboard.current.digit3Key.wasPressedThisFrame)
-        {
-            selectedCompanion = Companion3;
-            toggle3 = !toggle3;
-        }
-        if (Keyboard.current.digit4Key.wasPressedThisFrame)
-        {
-            selectedCompanion = Companion4;
-            toggle4 = !toggle4;
-        }
-        if (toggle1 == false && toggle2 == false && toggle3 == false && toggle4 == false) // reset variable if no Companion button is toggled on
+        if (toggle1 == false && toggle2 == false) // reset variable if no Companion button is toggled on
         {
             selectedCompanion = null;
         }
@@ -80,21 +74,22 @@ public class PlayerController : MonoBehaviour
             selectedCompanion.state = 2;
             selectedCompanion.targetPos = worldPos;
         }
+
+        if (selectedCompanion == null && Mouse.current.leftButton.isPressed && Time.fixedTime > attackDelay)
+        {
+            attackDelay = Time.fixedTime + attackRate;
+            cast_projectile = Instantiate(Projectile, transform.position + transform.up + (transform.right / 4), transform.rotation);
+            cast_projectile.SetActive(true);
+        }
     }
 
     private void FixedUpdate()
     {
 
         Rigidbody2D.velocity = moveDir * moveSpd;
-
-
-        // If GameObject is moving, affect rotation and rotate towards movement direction
-        if (moveDir != Vector3.zero)
-        {
-            targetRot = Quaternion.LookRotation(Vector3.forward, moveDir);
-            targetRot = Quaternion.RotateTowards(transform.rotation, targetRot, 720 * Time.fixedDeltaTime);
-            Rigidbody2D.MoveRotation(targetRot);
-        }
+        targetRot = Quaternion.LookRotation(Vector3.forward, vectorDiff.normalized);
+        targetRot = Quaternion.RotateTowards(transform.rotation, targetRot, 1080 * Time.fixedDeltaTime);
+        Rigidbody2D.MoveRotation(targetRot);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -103,4 +98,5 @@ public class PlayerController : MonoBehaviour
         float inputY = context.ReadValue<Vector2>().y;
         moveDir = new Vector2(inputX, inputY);
     }
+
 }

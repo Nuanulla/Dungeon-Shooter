@@ -7,15 +7,20 @@ public class EnemyStats : MonoBehaviour
 {
 
     private Vector3 currentPos;
-
+    private SpriteRenderer sprite;
     public Canvas Canvas;
     private GameObject enemyHealth;
     private Slider healthBarSlider;
-    public int health = 100; //remove '100' value and set from each enemy type's individual scripts
-    public int currentHealth = 100;
+    public int health; //this is a default value. Set actual value from each entity's individual scripts
+    public int currentHealth;
 
     // Start is called before the first frame update
     void Start()
+    {
+        sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+    }
+
+    public void CloneStatOverlay()
     {
         enemyHealth = Instantiate(Canvas.transform.GetChild(0).gameObject);
         enemyHealth.transform.SetParent(Canvas.transform, false);
@@ -23,6 +28,7 @@ public class EnemyStats : MonoBehaviour
         enemyHealth.SetActive(true);
         healthBarSlider.minValue = 0;
         healthBarSlider.maxValue = health;
+        currentHealth = health;
     }
 
     // Update is called once per frame
@@ -52,5 +58,21 @@ public class EnemyStats : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        StartCoroutine(FlashRed());
+    }
+
+    public void RecoverHealth(int recovery)
+    {
+        if (currentHealth < health)
+        {
+            currentHealth += recovery;
+        }
+    }
+
+    public IEnumerator FlashRed()
+    {
+        sprite.color = new Color(0.5f, 0f, 0f, 1f);
+        yield return new WaitForSeconds(0.1f);
+        sprite.color = Color.white;
     }
 }

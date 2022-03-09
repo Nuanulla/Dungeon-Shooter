@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-
+    private SpriteRenderer sprite;
     public GameObject playerStats;
     private Slider healthBarSlider;
     private Slider manaBarSlider;
@@ -24,6 +24,8 @@ public class PlayerStats : MonoBehaviour
         manaBarSlider.minValue = 0;
         manaBarSlider.maxValue = mana;
         playerStats.SetActive(true);
+
+        sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -44,10 +46,18 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        StartCoroutine(FlashRed());
     }
 
     public void SapMana(int cost)
     {
         currentMana -= cost;
+    }
+
+    public IEnumerator FlashRed()
+    {
+        sprite.color = new Color(0.5f, 0f, 0f, 1f);
+        yield return new WaitForSeconds(0.1f);
+        sprite.color = Color.white;
     }
 }
