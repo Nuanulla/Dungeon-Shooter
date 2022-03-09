@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
 
     private Rigidbody2D Rigidbody2D;
+    private CompanionStats PlayerStats;
     private Vector3 moveDir;
     private const float moveSpd = 7f;
     private Vector3 mousePos;
@@ -15,8 +16,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 vectorDiff;
     private Quaternion targetRot;
     private CompanionController selectedCompanion = null;
-    private bool toggle1 = false;
-    private bool toggle2 = false;
+    public bool toggle1 = false;
+    public bool toggle2 = false;
 
     public CompanionController Companion1;
     public CompanionController Companion2;
@@ -29,6 +30,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
+        PlayerStats = gameObject.GetComponent<CompanionStats>();
+        PlayerStats.health = 100;
+        PlayerStats.mana = 100;
+        PlayerStats.InitiatePlayerDisplayOverlay();
     }
 
     private void Start()
@@ -41,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
         mousePos = Mouse.current.position.ReadValue();
         worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        worldPos.z = 0f;
         vectorDiff = worldPos - transform.position;
 
 
@@ -49,11 +55,13 @@ public class PlayerController : MonoBehaviour
         {
             selectedCompanion = Companion1;
             toggle1 = !toggle1;
+            toggle2 = false;
         }
         if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             selectedCompanion = Companion2;
             toggle2 = !toggle2;
+            toggle1 = false;
         }
         if (toggle1 == false && toggle2 == false) // reset variable if no Companion button is toggled on
         {

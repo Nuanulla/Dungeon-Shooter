@@ -24,7 +24,7 @@ public class FriendlyGroup : MonoBehaviour
     public static GameObject FindClosestFriendly(Vector3 pos)
     {
         GameObject result = null;
-        float dist = 200f;
+        float dist = 225f;
         var e = FriendlyGroup.Pool.GetEnumerator();
         while(e.MoveNext())
         {
@@ -36,17 +36,5 @@ public class FriendlyGroup : MonoBehaviour
             }
         }
         return result;
-    }
-
-    public bool VerifyFriendly(GameObject entity)
-    {
-        if (Pool.Contains(entity))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 }

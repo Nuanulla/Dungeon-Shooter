@@ -7,6 +7,7 @@ public class CompanionStats : MonoBehaviour
 {
     private SpriteRenderer sprite;
     public Canvas Canvas;
+    public GameObject playerStats;
     private GameObject companionStats;
     private Slider healthBarSlider;
     private Slider manaBarSlider;
@@ -24,7 +25,22 @@ public class CompanionStats : MonoBehaviour
         sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
-    public void CloneDisplayOverlay()
+    public void InitiatePlayerDisplayOverlay()
+    {
+        healthBarSlider = playerStats.transform.GetChild(0).GetComponent<Slider>();
+        manaBarSlider = playerStats.transform.GetChild(1).GetComponent<Slider>();
+        healthBarSlider.minValue = 0;
+        healthBarSlider.maxValue = health;
+        manaBarSlider.minValue = 0;
+        manaBarSlider.maxValue = mana;
+        currentHealth = health;
+        currentMana = mana;
+        playerStats.SetActive(true);
+
+        image = playerStats.GetComponent<Image>();
+    }
+
+    public void CloneCompanionDisplayOverlay()
     {
         float OffsetX = 107f * (companionNumber - 1) + 195f;
         float OffsetY = -92f;
@@ -57,12 +73,9 @@ public class CompanionStats : MonoBehaviour
 
         if (currentHealth <= 0) // If health has been entirely depleted
         {
+            image.color = new Color(0.25f, 0.25f, 0.25f, 1f);
             Destroy(gameObject);
         }
-    }
-
-    void OnDestroy()
-    {
     }
 
     public void TakeDamage(int damage)
@@ -74,6 +87,14 @@ public class CompanionStats : MonoBehaviour
     public void SapMana(int cost)
     {
         currentMana -= cost;
+    }
+
+    public void RecoverHealth(int recovery)
+    {
+        if (currentHealth < health)
+        {
+            currentHealth += recovery;
+        }
     }
 
     public IEnumerator FlashRed()

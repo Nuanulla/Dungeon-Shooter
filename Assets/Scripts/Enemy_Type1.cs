@@ -59,7 +59,7 @@ public class Enemy_Type1 : MonoBehaviour
         if ((Vector3.Distance(currentPos, targetPos) <= 1.5f) && Time.fixedTime > attackDelay)
         {
             attackDelay = Time.fixedTime + attackRate;
-            nearestFriendly.SendMessage("TakeDamage", 10);
+            nearestFriendly.GetComponent<CompanionStats>().TakeDamage(10);
         }
     }
 }

@@ -64,7 +64,7 @@ public class Enemy_Type2 : MonoBehaviour
         {
             attackDelay = Time.fixedTime + attackRate;
             cast_projectile = Instantiate(Projectile, currentPos + (transform.up), transform.rotation);
-            cast_projectile.GetComponent<Projectile>().damage = 10;
+            cast_projectile.GetComponent<StandardProjectile_Type1>().damage = 10;
             cast_projectile.SetActive(true);
         }
     }

@@ -9,7 +9,7 @@ public class CompanionController : MonoBehaviour
     private const float moveSpd = 7f;
     public Vector3 targetPos;
     private Vector3 currentPos;
-    public int state; // 0 = at rest; 1 = change rotation; 2 = change position
+    public int state; // 0 = independent; 1 = change rotation; 2 = change position
     private Vector3 vectorDiff;
     public Quaternion targetRot;
     private Quaternion currentRot;
@@ -36,9 +36,7 @@ public class CompanionController : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        var nearestEnemy = EnemyGroup.FindClosestEnemy(transform.position);
-        
+    {   
         if (state == 1)
         {
             LookAtTarget();
@@ -48,14 +46,9 @@ public class CompanionController : MonoBehaviour
             Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
             LookAtTarget();
         }
-        if ((Vector3.Distance(currentPos, targetPos) <= 0.1f))
+        if (Vector3.Distance(currentPos, targetPos) <= 0.1f)
         {
             state = 0;
-        }
-        if ((state == 0) && (nearestEnemy != null))
-        {
-            targetPos = nearestEnemy.transform.position;
-            LookAtTarget();
         }
     }
 

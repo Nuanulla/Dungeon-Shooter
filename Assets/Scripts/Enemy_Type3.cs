@@ -76,7 +76,7 @@ public class Enemy_Type3 : MonoBehaviour
         if ((Vector3.Distance(currentPos, targetPos) <= 20f) && Time.fixedTime > attackDelay)
         {
             attackDelay = Time.fixedTime + attackRate;
-            nearestEnemy.SendMessage("RecoverHealth", 20);
+            nearestEnemy.GetComponent<EnemyStats>().RecoverHealth(20);
         }
     }
 
@@ -91,7 +91,7 @@ public class Enemy_Type3 : MonoBehaviour
         {
             attackDelay = Time.fixedTime + attackRate;
             cast_projectile = Instantiate(Projectile, currentPos + (transform.up), transform.rotation);
-            cast_projectile.GetComponent<Projectile>().damage = 5;
+            cast_projectile.GetComponent<StandardProjectile_Type1>().damage = 5;
             cast_projectile.SetActive(true);
         }
     }
