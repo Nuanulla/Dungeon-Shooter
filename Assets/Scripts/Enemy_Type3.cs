@@ -29,6 +29,10 @@ public class Enemy_Type3 : MonoBehaviour
         EnemyStats.CloneStatOverlay();
     }
 
+    void Start()
+    {
+    }
+
     void Update()
     {
         // Below script calculates current position and vector difference of a current position and target position
@@ -92,6 +96,7 @@ public class Enemy_Type3 : MonoBehaviour
             attackDelay = Time.fixedTime + attackRate;
             cast_projectile = Instantiate(Projectile, currentPos + (transform.up), transform.rotation);
             cast_projectile.GetComponent<StandardProjectile_Type1>().damage = 5;
+            cast_projectile.GetComponent<StandardProjectile_Type1>().type = "rock";
             cast_projectile.SetActive(true);
         }
     }

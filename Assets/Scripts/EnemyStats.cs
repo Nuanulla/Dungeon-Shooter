@@ -14,6 +14,8 @@ public class EnemyStats : MonoBehaviour
     public int health; //this is a default value. Set actual value from each entity's individual scripts
     public int currentHealth;
 
+    public AudioClip hurt;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,8 +57,9 @@ public class EnemyStats : MonoBehaviour
         enemyHealth.transform.position = new Vector3(currentPos.x, currentPos.y - 1f, currentPos.z);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, string type = default(string))
     {
+        AudioSource.PlayClipAtPoint(hurt, transform.position);
         currentHealth -= damage;
         StartCoroutine(FlashRed());
     }

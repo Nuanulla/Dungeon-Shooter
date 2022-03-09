@@ -20,6 +20,8 @@ public class Companion_Type2 : MonoBehaviour
     private float attackDelay;
     private GameObject nearestEnemy;
 
+    public AudioClip attack;
+
     void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -71,12 +73,22 @@ public class Companion_Type2 : MonoBehaviour
     {
         if (Vector3.Distance(currentPos, targetPos) > 1.5f)
         {
-            Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
+            Move();
         }
         if ((Vector3.Distance(currentPos, targetPos) <= 1.5f) && Time.fixedTime > attackDelay)
         {
             attackDelay = Time.fixedTime + attackRate;
-            nearestEnemy.SendMessage("TakeDamage", 15);
+            AudioSource.PlayClipAtPoint(attack, transform.position);
+            nearestEnemy.GetComponent<EnemyStats>().TakeDamage(15);
+        }
+    }
+
+    void Move()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up, transform.up);
+        if (EnemyGroup.Pool.Contains(hit.collider.gameObject))
+        {
+            Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
         }
     }
 }

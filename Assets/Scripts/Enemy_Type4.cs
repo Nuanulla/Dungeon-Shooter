@@ -21,6 +21,11 @@ public class Enemy_Type4 : MonoBehaviour
 
     private GameObject nearestFriendly;
 
+    public AudioClip attack;
+    public AudioClip growl;
+    public AudioSource onCall;
+    private bool hasPlayed = false;
+
 
     private void Awake()
     {
@@ -42,6 +47,12 @@ public class Enemy_Type4 : MonoBehaviour
         nearestFriendly = FriendlyGroup.FindClosestFriendly(transform.position);
         if (nearestFriendly != null)
         {
+            if (!hasPlayed)
+            {
+                onCall.clip = growl;
+                onCall.Play();
+                hasPlayed = true;
+            }
             targetPos = nearestFriendly.transform.position;
             LookAtTarget();
             RangedAttackBehavior();
@@ -78,12 +89,14 @@ public class Enemy_Type4 : MonoBehaviour
 
     void RangedAttackType1()
     {
+        AudioSource.PlayClipAtPoint(attack, transform.position);
         cast_projectile1 = Instantiate(ProjectileType1, currentPos + (transform.up), transform.rotation);
         cast_projectile1.GetComponent<StandardProjectile_Type1>().damage = 25;
         cast_projectile1.SetActive(true);
     }
     void RangedAttackType2()
     {
+        AudioSource.PlayClipAtPoint(attack, transform.position);
         cast_projectile2 = Instantiate(ProjectileType2, currentPos + (transform.up * 1.5f), transform.rotation);
         cast_projectile2.GetComponent<StandardProjectile_Type2>().damage = 50;
         cast_projectile2.SetActive(true);

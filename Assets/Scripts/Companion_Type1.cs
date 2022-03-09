@@ -23,6 +23,8 @@ public class Companion_Type1 : MonoBehaviour
     private GameObject nearestEnemy;
     private GameObject nearestFriendly;
 
+    public AudioClip attack;
+
     void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -85,7 +87,7 @@ public class Companion_Type1 : MonoBehaviour
     {
         if (Vector3.Distance(currentPos, targetPos) > 5f)
         {
-            Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
+            Move();
         }
         if ((Vector3.Distance(currentPos, targetPos) <= 15f) && Time.fixedTime > attackDelay)
         {
@@ -105,9 +107,19 @@ public class Companion_Type1 : MonoBehaviour
         if ((EnemyGroup.Pool.Contains(hit.collider.gameObject)) && (Vector3.Distance(currentPos, targetPos) <= 10f) && (Time.fixedTime > attackDelay))
         {
             attackDelay = Time.fixedTime + attackRate;
+            AudioSource.PlayClipAtPoint(attack, transform.position);
             cast_projectile = Instantiate(Projectile, currentPos + transform.up + (transform.right / 4), transform.rotation);
             cast_projectile.GetComponent<StandardProjectile_Type1>().damage = 10;
             cast_projectile.SetActive(true);
+        }
+    }
+
+    void Move()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up, transform.up);
+        if (EnemyGroup.Pool.Contains(hit.collider.gameObject))
+        {
+            Rigidbody2D.MovePosition(currentPos + (vectorDiff.normalized * Time.fixedDeltaTime * moveSpd));
         }
     }
 }

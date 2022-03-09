@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     public GameObject Projectile;
     private GameObject cast_projectile;
 
+    public AudioClip attack;
+
     private void Awake()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -86,6 +88,7 @@ public class PlayerController : MonoBehaviour
         if (selectedCompanion == null && Mouse.current.leftButton.isPressed && Time.fixedTime > attackDelay)
         {
             attackDelay = Time.fixedTime + attackRate;
+            AudioSource.PlayClipAtPoint(attack, transform.position);
             cast_projectile = Instantiate(Projectile, transform.position + transform.up + (transform.right / 4), transform.rotation);
             cast_projectile.SetActive(true);
         }

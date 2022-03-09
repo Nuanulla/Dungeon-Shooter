@@ -20,9 +20,13 @@ public class CompanionStats : MonoBehaviour
 
     public Image image;
 
+    public AudioClip rock_hit;
+    public AudioClip dying;
+
     void Start()
     {   
         sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        StartCoroutine(AutoRecoverMana());
     }
 
     public void InitiatePlayerDisplayOverlay()
@@ -73,13 +77,19 @@ public class CompanionStats : MonoBehaviour
 
         if (currentHealth <= 0) // If health has been entirely depleted
         {
+            AudioSource.PlayClipAtPoint(dying, transform.position);
             image.color = new Color(0.25f, 0.25f, 0.25f, 1f);
             Destroy(gameObject);
         }
+
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, string type = default(string))
     {
+        if (type == "rock")
+        {
+            AudioSource.PlayClipAtPoint(rock_hit, transform.position);
+        }
         currentHealth -= damage;
         StartCoroutine(FlashRed());
     }
@@ -102,5 +112,15 @@ public class CompanionStats : MonoBehaviour
         sprite.color = new Color(0.5f, 0f, 0f, 1f);
         yield return new WaitForSeconds(0.1f);
         sprite.color = Color.white;
+        StopCoroutine(FlashRed());
+    }
+
+    public IEnumerator AutoRecoverMana()
+    {
+        yield return new WaitForSeconds(2.5f);
+        if (currentMana != mana)
+        {
+            currentMana += 5;
+        }
     }
 }

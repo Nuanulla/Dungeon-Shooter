@@ -8,6 +8,7 @@ public class StandardProjectile_Type1 : MonoBehaviour
     private Rigidbody2D Rigidbody2D;
     private const float moveSpd = 9f;
     public int damage = 10;
+    public string type = null;
 
     // Start is called before the first frame update
     private void Awake()
@@ -28,9 +29,13 @@ public class StandardProjectile_Type1 : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (FriendlyGroup.Pool.Contains(col.gameObject) || EnemyGroup.Pool.Contains(col.gameObject))
+        if (FriendlyGroup.Pool.Contains(col.gameObject))
         {
-            col.gameObject.SendMessage("TakeDamage", damage);
+            col.gameObject.GetComponent<CompanionStats>().TakeDamage(damage, type);
+        }
+        if (EnemyGroup.Pool.Contains(col.gameObject))
+        {
+            col.gameObject.GetComponent<EnemyStats>().TakeDamage(damage, type);
         }
         if (!col.isTrigger)
         {
