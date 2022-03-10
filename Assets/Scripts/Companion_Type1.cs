@@ -92,8 +92,11 @@ public class Companion_Type1 : MonoBehaviour
         if ((Vector3.Distance(currentPos, targetPos) <= 15f) && Time.fixedTime > attackDelay)
         {
             attackDelay = Time.fixedTime + attackRate;
-            nearestFriendly.GetComponent<CompanionStats>().RecoverHealth(3);
-            GetComponent<CompanionStats>().SapMana(3);
+            if (GetComponent<CompanionStats>().currentMana >= 3)
+            {
+                nearestFriendly.GetComponent<CompanionStats>().RecoverHealth(3);
+                GetComponent<CompanionStats>().SapMana(3);
+            }
         }
     }
 
