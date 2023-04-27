@@ -38,11 +38,6 @@ public class PlayerController : MonoBehaviour
         PlayerStats.InitiatePlayerDisplayOverlay();
     }
 
-    private void Start()
-    {
-        
-    }
-
     private void Update()
     {
 

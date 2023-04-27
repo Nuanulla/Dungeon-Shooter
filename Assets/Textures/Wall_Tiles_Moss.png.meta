@@ -396,6 +396,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -3076,6 +3077,131 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Wall_Tiles_Moss_111: 4207466483897595033
+      Wall_Tiles_Moss_54: 4868735191108236758
+      Wall_Tiles_Moss_39: -5833199391630907132
+      Wall_Tiles_Moss_115: -458007987901165585
+      Wall_Tiles_Moss_107: 2655124891311988828
+      Wall_Tiles_Moss_79: -1783517885103003178
+      Wall_Tiles_Moss_93: 2881408791729365916
+      Wall_Tiles_Moss_109: -256499216732260561
+      Wall_Tiles_Moss_7: 4153224512422759991
+      Wall_Tiles_Moss_53: 5979449610088074260
+      Wall_Tiles_Moss_6: 5017695532101858223
+      Wall_Tiles_Moss_41: 8099115576775260794
+      Wall_Tiles_Moss_3: 7142262351776341396
+      Wall_Tiles_Moss_72: -8093433043759391221
+      Wall_Tiles_Moss_11: 1686581199987567739
+      Wall_Tiles_Moss_89: -3291684841910758508
+      Wall_Tiles_Moss_112: 2926473908742571511
+      Wall_Tiles_Moss_18: -4069032758436780938
+      Wall_Tiles_Moss_51: 4861569670675542836
+      Wall_Tiles_Moss_71: -6863874510341897753
+      Wall_Tiles_Moss_57: -3470923272558224952
+      Wall_Tiles_Moss_122: -4826915950110781812
+      Wall_Tiles_Moss_42: 6630043555925353835
+      Wall_Tiles_Moss_50: -6819437736800241311
+      Wall_Tiles_Moss_101: -2377611186241043960
+      Wall_Tiles_Moss_59: 8738091419548051330
+      Wall_Tiles_Moss_67: 2234568920138657968
+      Wall_Tiles_Moss_30: -3659857145659350673
+      Wall_Tiles_Moss_68: 698351281676789021
+      Wall_Tiles_Moss_55: -6442602270459224633
+      Wall_Tiles_Moss_90: 9137550145832184814
+      Wall_Tiles_Moss_103: -7897646250147113579
+      Wall_Tiles_Moss_48: -4633654527342821196
+      Wall_Tiles_Moss_58: 4054078810439927246
+      Wall_Tiles_Moss_84: -1203777723259729005
+      Wall_Tiles_Moss_43: 2191496835213360636
+      Wall_Tiles_Moss_102: -5993719622397038728
+      Wall_Tiles_Moss_2: -5338414460895524779
+      Wall_Tiles_Moss_23: 915139371849772135
+      Wall_Tiles_Moss_62: -1549449722563696822
+      Wall_Tiles_Moss_108: -4092200801222151993
+      Wall_Tiles_Moss_31: 5170749876323778174
+      Wall_Tiles_Moss_21: 6299738689975400638
+      Wall_Tiles_Moss_110: -8322986840554739050
+      Wall_Tiles_Moss_65: -4968010422876881808
+      Wall_Tiles_Moss_113: -7864866367221895669
+      Wall_Tiles_Moss_83: -3803059096052640727
+      Wall_Tiles_Moss_121: -5091666192548104238
+      Wall_Tiles_Moss_106: 129812081248692781
+      Wall_Tiles_Moss_5: -428693181377984734
+      Wall_Tiles_Moss_0: -5896683746281076080
+      Wall_Tiles_Moss_63: 8608783755773772929
+      Wall_Tiles_Moss_86: 142568752567350285
+      Wall_Tiles_Moss_9: 3527409272154358821
+      Wall_Tiles_Moss_80: 6930499733203325016
+      Wall_Tiles_Moss_45: 9166281533116179669
+      Wall_Tiles_Moss_12: -2015564707455619661
+      Wall_Tiles_Moss_1: -6468867937282995069
+      Wall_Tiles_Moss_26: 4522136921394890736
+      Wall_Tiles_Moss_70: 8089687581129731104
+      Wall_Tiles_Moss_85: 8359595400336270761
+      Wall_Tiles_Moss_81: 6940800709490253902
+      Wall_Tiles_Moss_117: -1983620779933942237
+      Wall_Tiles_Moss_61: -9020707352534793857
+      Wall_Tiles_Moss_52: 5529469480962279342
+      Wall_Tiles_Moss_22: -3685447115194546298
+      Wall_Tiles_Moss_76: -7845912825959619726
+      Wall_Tiles_Moss_66: -1500084458038842060
+      Wall_Tiles_Moss_40: -4794989811191140392
+      Wall_Tiles_Moss_77: -590626933591855330
+      Wall_Tiles_Moss_104: -464105836666378402
+      Wall_Tiles_Moss_46: 6824720498738917615
+      Wall_Tiles_Moss_78: -4430474434116016247
+      Wall_Tiles_Moss_17: 1161805104157491189
+      Wall_Tiles_Moss_100: 3226465543119624449
+      Wall_Tiles_Moss_10: 4359062269835965011
+      Wall_Tiles_Moss_97: 3995605286958230616
+      Wall_Tiles_Moss_20: -8332052555111379685
+      Wall_Tiles_Moss_33: -1245761165010219838
+      Wall_Tiles_Moss_88: 4534051660113223325
+      Wall_Tiles_Moss_75: 2094834345267754787
+      Wall_Tiles_Moss_94: -3598217415513426899
+      Wall_Tiles_Moss_13: 6834437756510352194
+      Wall_Tiles_Moss_16: -2856818986452720353
+      Wall_Tiles_Moss_14: -3632736091529194358
+      Wall_Tiles_Moss_56: -7845270731510144441
+      Wall_Tiles_Moss_123: -1045694089108635140
+      Wall_Tiles_Moss_116: 4993164167064079408
+      Wall_Tiles_Moss_35: 3343231717815090027
+      Wall_Tiles_Moss_91: -4312941142243384888
+      Wall_Tiles_Moss_87: 4370372427867440702
+      Wall_Tiles_Moss_73: -8432316355991035773
+      Wall_Tiles_Moss_119: 1021257590440660481
+      Wall_Tiles_Moss_28: 9148509932226449268
+      Wall_Tiles_Moss_37: 5517374108622072115
+      Wall_Tiles_Moss_8: 1149653636506027795
+      Wall_Tiles_Moss_95: 6966594515968734155
+      Wall_Tiles_Moss_49: -2366723048679705663
+      Wall_Tiles_Moss_60: -1010075010111209226
+      Wall_Tiles_Moss_118: 2296557292612761390
+      Wall_Tiles_Moss_25: 5651270628584044704
+      Wall_Tiles_Moss_74: -4652186138991220178
+      Wall_Tiles_Moss_96: 4422476938703868405
+      Wall_Tiles_Moss_24: -4059051535125376421
+      Wall_Tiles_Moss_36: -2358217830427716583
+      Wall_Tiles_Moss_38: -7515840077504798636
+      Wall_Tiles_Moss_4: -5469314455579832833
+      Wall_Tiles_Moss_15: 1606557953647829134
+      Wall_Tiles_Moss_120: -5529623105585943715
+      Wall_Tiles_Moss_92: 5866827573666035087
+      Wall_Tiles_Moss_19: 481577929925214645
+      Wall_Tiles_Moss_34: -4116277247786067062
+      Wall_Tiles_Moss_98: -5010555438060323320
+      Wall_Tiles_Moss_44: 1665407868873495387
+      Wall_Tiles_Moss_47: 8224331281219388685
+      Wall_Tiles_Moss_105: 4263160468644657118
+      Wall_Tiles_Moss_99: -6869068022308331866
+      Wall_Tiles_Moss_114: -8306957689444362337
+      Wall_Tiles_Moss_29: 953346489386788581
+      Wall_Tiles_Moss_69: -4485776546236108655
+      Wall_Tiles_Moss_64: -8942816468787694288
+      Wall_Tiles_Moss_82: -886506856669375133
+      Wall_Tiles_Moss_32: 3170135737814053443
+      Wall_Tiles_Moss_27: -2019584771696210174
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

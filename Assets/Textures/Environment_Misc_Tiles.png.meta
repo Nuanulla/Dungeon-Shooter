@@ -132,6 +132,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -586,6 +587,25 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Environment_Misc_Tiles_13: -4618976112042643458
+      Environment_Misc_Tiles_5: -8078552813008432810
+      Environment_Misc_Tiles_6: 8771993782844119393
+      Environment_Misc_Tiles_3: -1562877667842408386
+      Environment_Misc_Tiles_4: 1316850348657421808
+      Environment_Misc_Tiles_12: 8653353228499487064
+      Environment_Misc_Tiles_2: -1632458688042112622
+      Environment_Misc_Tiles_1: -8622635799942744170
+      Environment_Misc_Tiles_9: -7709802722229354642
+      Environment_Misc_Tiles_10: -4818035864994243363
+      Environment_Misc_Tiles_14: -5895728440297851637
+      Environment_Misc_Tiles_16: 6267976718970087471
+      Environment_Misc_Tiles_17: 323972796044224242
+      Environment_Misc_Tiles_0: 5213188279232027715
+      Environment_Misc_Tiles_15: 4299789300793362634
+      Environment_Misc_Tiles_8: -2907047128942853548
+      Environment_Misc_Tiles_7: -7026966960646567291
+      Environment_Misc_Tiles_11: -3186239742304840937
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
