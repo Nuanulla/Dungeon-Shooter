@@ -29,10 +29,6 @@ public class Enemy_Type3 : MonoBehaviour
         EnemyStats.CloneStatOverlay();
     }
 
-    void Start()
-    {
-    }
-
     void Update()
     {
         // Below script calculates current position and vector difference of a current position and target position

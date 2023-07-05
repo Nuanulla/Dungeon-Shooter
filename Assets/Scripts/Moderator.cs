@@ -12,5 +12,9 @@ public class Moderator : MonoBehaviour
             SceneManager.LoadScene("Menu");
             // Implement Results Menu here
         }
+        if (GameObject.Find("Troll 1") == null)
+        {
+            SceneManager.LoadScene("Menu");
+        }
     }
 }
